@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocShield - Agentic Digitization, Alignment & Security Hub</title>
+    <!-- Modern Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glow-container">
+        <div class="glow-sphere glow-1"></div>
+        <div class="glow-sphere glow-2"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="glass-panel main-header">
+            <div class="brand">
+                <div class="logo-icon">🛡️</div>
+                <div class="logo-text">
+                    <h1>DocShield</h1>
+                    <span>Agentic Alignment & Security Hub</span>
+                </div>
+            </div>
+            
+            <div class="header-controls">
+                <!-- API Credentials Overrides -->
+                <div class="credentials-bar glass-panel">
+                    <input type="password" id="openai-key-input" placeholder="OpenAI Key override..." class="key-input">
+                    <input type="password" id="gemini-key-input" placeholder="Gemini Key override..." class="key-input">
+                </div>
+
+                <!-- Active Document Status -->
+                <div id="status-badge" class="status-badge inactive">
+                    <span class="status-dot"></span>
+                    <span id="status-text">No Document</span>
+                </div>
+
+                <!-- Upload New Document Button -->
+                <button id="header-upload-btn" class="icon-btn" title="Upload New PDF" style="display: none;">📤</button>
+
+                <!-- New Analysis Button -->
+                <button id="header-clear-btn" class="icon-btn" title="Start New Analysis" style="display: none;">🔄</button>
+
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="icon-btn" title="Toggle Theme">🌓</button>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT -->
+        <div class="main-content">
+            <!-- LEFT PANEL: TABS & VIEWS -->
+            <section class="left-panel">
+                <nav class="tab-nav glass-panel">
+                    <button class="tab-btn active" data-tab="qa-tab">💬 Q&A & Alignment</button>
+                    <button class="tab-btn" data-tab="security-tab">🎯 Red-Team & Security Audit</button>
+                </nav>
+
+                <div class="view-container">
+                    <!-- Q&A & ALIGNMENT VIEW -->
+                    <div id="qa-tab" class="tab-view active">
+                        <!-- UPLOAD ZONE (overlay/initial state) -->
+                        <div id="upload-zone" class="glass-panel upload-card">
+                            <div class="upload-icon">📤</div>
+                            <h3>Upload Document</h3>
+                            <p>Drag and drop your PDF here, or click to browse</p>
+                            <input type="file" id="file-uploader" accept="application/pdf" style="display: none;">
+                            <span class="file-info" id="selected-file-name">Supports standard PDFs</span>
+                        </div>
+
+                        <!-- CHAT VIEWPORT -->
+                        <div class="chat-viewport glass-panel" style="display: none;">
+                            <div id="chat-messages" class="messages-container">
+                                <div class="system-message glass-panel">
+                                    <h4>System Initialized</h4>
+                                    <p>Layout-aware parsing and hybrid BM25 + Vector indexing complete. Ready to take queries.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="query-bar-container">
+                                <div class="query-bar-input">
+                                    <textarea id="query-input" placeholder="Ask a question about the document..." rows="1"></textarea>
+                                    <button id="send-btn" class="send-btn">
+                                        <svg viewBox="0 0 24 24" width="24" height="24">
+                                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="currentColor"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RED-TEAM & SECURITY AUDIT VIEW -->
+                    <div id="security-tab" class="tab-view">
+                        <div class="audit-dashboard glass-panel">
+                            <!-- Gauge & Key Stats -->
+                            <div class="audit-metrics-row">
+                                <div class="gauge-container glass-panel">
+                                    <div class="gauge-label">RAG Security Score</div>
+                                    <div class="radial-gauge">
+                                        <svg width="160" height="160" viewBox="0 0 160 160">
+                                            <circle class="gauge-bg" cx="80" cy="80" r="70"></circle>
+                                            <circle class="gauge-fill" id="security-gauge-fill" cx="80" cy="80" r="70"></circle>
+                                        </svg>
+                                        <div class="gauge-value" id="security-score-val">0%</div>
+                                    </div>
+                                    <div class="gauge-sub">Based on 6 attacks</div>
+                                </div>
+
+                                <div class="sub-stats glass-panel">
+                                    <div class="stat-group">
+                                        <div class="stat-header">
+                                            <span>Avg Faithfulness</span>
+                                            <span id="faith-val">0.0/10</span>
+                                        </div>
+                                        <div class="progress-bar"><div class="progress-fill" id="faith-bar" style="width: 0%"></div></div>
+                                    </div>
+                                    <div class="stat-group">
+                                        <div class="stat-header">
+                                            <span>Avg Leak Resistance</span>
+                                            <span id="leak-val">0.0/10</span>
+                                        </div>
+                                        <div class="progress-bar"><div class="progress-fill" id="leak-bar" style="width: 0%"></div></div>
+                                    </div>
+                                    <div class="stat-group">
+                                        <div class="stat-header">
+                                            <span>Avg Injection Resistance</span>
+                                            <span id="inject-val">0.0/10</span>
+                                        </div>
+                                        <div class="progress-bar"><div class="progress-fill" id="inject-bar" style="width: 0%"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Audit Trigger -->
+                            <div class="audit-action-bar">
+                                <button id="run-audit-btn" class="red-btn">🚨 Execute Adversarial Red-Teaming Audit</button>
+                                <div class="audit-status-msg" id="audit-status-msg">Upload a document to run security audits.</div>
+                            </div>
+
+                            <!-- Audit Logs List -->
+                            <div class="audit-results-list" id="audit-results-list">
+                                <!-- Results populate here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RIGHT PANEL: AGENT REASONING CONSOLE -->
+            <aside class="right-panel glass-panel" id="reasoning-sidebar">
+                <div class="sidebar-header">
+                    <h3>🧠 Agent Reasoning Console</h3>
+                    <button id="sidebar-toggle-btn" class="toggle-btn" title="Toggle Console">➔</button>
+                </div>
+                <div class="timeline-container">
+                    <ul id="timeline-list" class="timeline">
+                        <li class="timeline-item system">
+                            <span class="timeline-dot"></span>
+                            <div class="timeline-content">
+                                <span class="time">System Init</span>
+                                <h4>Waiting for Document</h4>
+                                <p>Ingestion pipeline, hybrid database, and RAG supervisor online. Ready for uploads.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- JavaScript code hooks -->
+    <script src="app.js"></script>
+</body>
+</html>

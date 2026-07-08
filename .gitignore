@@ -1,0 +1,21 @@
+# Virtual Environment
+.venv/
+venv/
+ENV/
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# DocShield Data Caches & Vector Databases
+data/chroma/
+data/test_doc.pdf
+data/doc_info.json
+data/parsed_chunks.json
+data/rlhf_preference_dataset.jsonl
