@@ -116,3 +116,15 @@ Open **[http://localhost:8090/](http://localhost:8090/)** in your browser. Paste
 *   **Table Precision:** 100% boundary isolation rate.
 *   **Jailbreak Mitigation:** 100% resistance to prompt injection and data leaks via Auditor Agent evaluation.
 *   **Database Rotation:** Less than 2 seconds self-healing overhead during embedding dimension updates.
+
+---
+
+## 👤 Author
+
+**Akshat Vadera** — [GitHub](https://github.com/Vadera007) · [LinkedIn](https://linkedin.com/in/akshatvadera)
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** — see [LICENSE](LICENSE) for details.
